@@ -33,7 +33,7 @@ export const SignUpForm: React.FC = () => {
       <div 
         className="absolute inset-0"
         style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
         }}
       />
       
