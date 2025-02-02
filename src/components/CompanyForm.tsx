@@ -3,7 +3,6 @@ import { Form, Input, InputNumber, Button, Card, message } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { companiesApi } from '../api/companies';
-import { Company } from '../types/types';
 import { AppLayout } from './Layout';
 
 interface CompanyFormData {
@@ -20,7 +19,7 @@ export const CompanyForm: React.FC = () => {
 
   const { data: company } = useQuery({
     queryKey: ['company', id],
-    queryFn: () => companiesApi.getById(Number(id)),
+    queryFn: () => companiesApi.getById(id as string),
     enabled: isEdit,
     select: (response) => response.data,
   });

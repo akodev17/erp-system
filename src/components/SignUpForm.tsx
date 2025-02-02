@@ -11,7 +11,7 @@ export const SignUpForm: React.FC = () => {
   const signUp = useMutation({
     mutationFn: authApi.signUp,
     onSuccess: (response) => {
-      localStorage.setItem('data', JSON.stringify(response.data));
+      localStorage.setItem('token', response.data.token);
       message.success('Successfully signed up!');
       navigate('/companies');
     },
@@ -21,8 +21,24 @@ export const SignUpForm: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <Card className="w-full max-w-md">
+    <div 
+      className="min-h-screen flex items-center justify-center relative"
+      style={{
+        backgroundImage: `url('./public/background.jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Dark overlay */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        }}
+      />
+      
+      {/* Content */}
+      <Card className="w-full max-w-md z-10 shadow-xl">
         <h1 className="text-2xl font-bold mb-6 text-center">Sign Up</h1>
         <Form<SignUpPayload>
           layout="vertical"
@@ -33,34 +49,34 @@ export const SignUpForm: React.FC = () => {
             name="fullName"
             rules={[{ required: true, message: 'Please input your full name!' }]}
           >
-            <Input />
+            <Input size="large" />
           </Form.Item>
           <Form.Item
             label="Login"
             name="login"
             rules={[{ required: true, message: 'Please input your login!' }]}
           >
-            <Input />
+            <Input size="large" />
           </Form.Item>
           <Form.Item
             label="Password"
             name="password"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Input.Password />
+            <Input.Password size="large" />
           </Form.Item>
           <Form.Item>
             <Button 
               type="primary"
               htmlType="submit"
               loading={signUp.isPending}
-              className="w-full"
+              className="w-full h-10 text-lg"
             >
               Sign Up
             </Button>
           </Form.Item>
           <div className="text-center">
-            Already have an account? <Link to="/signin">Sign In</Link>
+            Already have an account? <Link to="/signin" className="text-blue-600 hover:text-blue-700">Sign In</Link>
           </div>
         </Form>
       </Card>

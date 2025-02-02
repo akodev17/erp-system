@@ -16,7 +16,7 @@ export interface User {
 }
 
 export interface Company {
-  id: number;
+  id: string; // Using string for UUID
   name: string;
   count: number;
 }

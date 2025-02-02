@@ -1,11 +1,14 @@
 import React from 'react';
-import { Table, Button, Dropdown, Menu, message } from 'antd';
-import { PlusOutlined, MoreOutlined } from '@ant-design/icons';
+import { Table, Button, Dropdown, Modal, message } from 'antd';
+import { PlusOutlined, MoreOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { companiesApi } from '../api/companies';
 import { Company } from '../types/types';
 import { AppLayout } from './Layout';
+
+const { confirm } = Modal;
 
 export const CompanyList: React.FC = () => {
   const navigate = useNavigate();
@@ -23,9 +26,50 @@ export const CompanyList: React.FC = () => {
       message.success('Company deleted successfully');
       queryClient.invalidateQueries({ queryKey: ['companies'] });
     },
+    onError: (error) => {
+      console.error('Delete error:', error);
+      message.error('Failed to delete company. Please try again.');
+    },
   });
 
-  const columns = [
+  const showDeleteConfirm = (id: string) => {
+    confirm({
+      title: 'Are you sure you want to delete this company?',
+      icon: <ExclamationCircleOutlined />,
+      content: 'This action cannot be undone.',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        return deleteCompany.mutateAsync(id).catch(() => {
+          message.error('Failed to delete company');
+        });
+      },
+    });
+  };
+
+  const getDropdownItems = (record: Company): MenuProps['items'] => [
+    {
+      key: 'edit',
+      label: 'Edit',
+      onClick: () => navigate(`/companies/edit/${record.id}`),
+    },
+    {
+      key: 'delete',
+      label: 'Delete',
+      danger: true,
+      onClick: () => showDeleteConfirm(record.id),
+    },
+  ];
+
+  interface ColumnType {
+    title: string;
+    dataIndex?: string;
+    key: string;
+    render?: (_: any, record: Company) => JSX.Element;
+  }
+
+  const columns: ColumnType[] = [
     {
       title: 'Name',
       dataIndex: 'name',
@@ -39,24 +83,11 @@ export const CompanyList: React.FC = () => {
     {
       title: 'Actions',
       key: 'actions',
-      render: (_: any, record: Company) => (
+      render: (_, record: Company) => (
         <Dropdown
-        // Compare this snippet from node_modules/antd/es/dropdown/dropdown.d.ts:
-          menu={
-            <Menu>
-              <Menu.Item key="edit" onClick={() => navigate(`/companies/edit/${record.id}`)}>
-                Edit
-              </Menu.Item>
-              <Menu.Item 
-                key="delete" 
-                danger
-                onClick={() => deleteCompany.mutate(record.id)}
-              >
-                Delete
-              </Menu.Item>
-            </Menu>
-          }
+          menu={{ items: getDropdownItems(record) }}
           trigger={['click']}
+          placement="bottomRight"
         >
           <Button icon={<MoreOutlined />} />
         </Dropdown>

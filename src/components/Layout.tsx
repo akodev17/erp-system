@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Button } from 'antd';
 import { useAuth } from '../hooks/useAuth';
 import { LogoutOutlined } from '@ant-design/icons';
 
@@ -14,11 +14,10 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
         <div className="text-white text-xl">Company Management</div>
         <Button 
           type="text" 
-          icon={<LogoutOutlined />} 
           onClick={logout}
           className="text-white"
         >
-          Logout
+          <div className='text-stone-100'>Logout <LogoutOutlined /></div>
         </Button>
       </Header>
       <Content className="p-6">

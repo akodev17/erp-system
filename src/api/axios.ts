@@ -6,7 +6,6 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const data = JSON.parse(localStorage.getItem('data') || '{}');
-  console.log('data being sent:', data); // Log the data
   if (data) {
     config.headers.Authorization = `Bearer ${data}`;
   }

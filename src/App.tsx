@@ -19,6 +19,9 @@ export const App: React.FC = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
+          {/* Default route to redirect to signin */}
+          <Route path="/" element={<Navigate to="/signin" />} />
+
           <Route path="/signup" element={<SignUpForm />} />
           <Route path="/signin" element={<SignInForm />} />
           <Route 

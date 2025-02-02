@@ -6,7 +6,7 @@ export const useAuth = () => {
   const queryClient = useQueryClient();
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('data');
     queryClient.clear();
     navigate('/signin');
   };
