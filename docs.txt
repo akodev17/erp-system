@@ -1,2 +1,28 @@
 Download app 
 Sign in: email: test1@gmail.com, password: test1@gmail.com 
+
+Technologies Used:
+
+1. **Frontend:**
+   - React: For building dynamic user interfaces.
+   - React Router: For routing and navigation within the application.
+   - Ant Design: For pre-built UI components and design.
+   - Tailwind CSS: For utility-first CSS styling.
+
+2. **State Management:**
+   - React Query: For managing server state and caching.
+
+3. **Backend Interaction:**
+   - Axios: For making HTTP requests to backend APIs.
+
+4. **Build Tools:**
+   - Vite: For faster builds and development environment.
+
+5. **Type Checking:**
+   - TypeScript: For static typing of JavaScript code.
+
+6. **Linting:**
+   - ESLint: For identifying and fixing code quality issues.
+
+This app is a modern web application with a focus on efficient state management, fast builds, and a pleasant user interface using the above technologies.
+
