@@ -11,7 +11,7 @@ export const SignInForm: React.FC = () => {
   const signIn = useMutation({
     mutationFn: authApi.signIn,
     onSuccess: (response) => {
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('data', JSON.stringify(response.data));
       message.success('Successfully signed in!');
       navigate('/companies');
     },
@@ -24,7 +24,7 @@ export const SignInForm: React.FC = () => {
     <div 
       className="min-h-screen flex items-center justify-center relative"
       style={{
-        backgroundImage: `url('./public/background.jpg')`,
+        backgroundImage: `url('/background.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
